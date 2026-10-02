@@ -1,384 +1,768 @@
 # Bank Management System
 
-## 📌 Project Overview
+## Project Overview
 
-This is a console-based **Bank Management System** developed in C++ with Object-Oriented Programming (OOP) principles. The system simulates a real banking environment where **administrators (users)** can manage **bank clients** and their accounts, while performing essential banking operations such as deposits, withdrawals, transfers, and balance inquiries.
+This is a console-based **Bank Management System** that I built using C++ and OOP.
 
-The project demonstrates comprehensive OOP concepts including inheritance, encapsulation, abstraction, and polymorphism. It serves as a practical learning project to understand how modern banking systems organize data, handle user permissions, and manage financial transactions.
+The idea of the project is to simulate a simple banking system where system users can manage clients and perform different banking operations like deposit, withdraw, and transfer.
 
----
+I used the project mainly to practice and apply the OOP concepts that I learned, especially inheritance, encapsulation, abstraction, polymorphism, constructors, static members, enums, and file handling.
 
-## ✨ Features
-
-### 🔐 Authentication & Permissions
-- **User Login System**: Secure authentication with username and password
-- **Role-Based Access Control**: Users have different permission levels (enumerated as `en_Permissions`)
-  - List Clients, Add New Client, Delete Client, Update Client Info, Find Client
-  - Perform Transactions (Deposit, Withdraw, Transfer)
-  - Manage Users (Add, Update, Delete, Find users)
-  - View Login Register logs
-  - Access all features with Admin level permission
-- **Login Registration**: Automatic logging of all user login attempts with timestamps
-- **Permission Validation**: Each screen checks user permissions before allowing access
-
-### 👥 Client Management
-- **Add New Client**: Create new bank client accounts with personal information and account details
-- **View Client List**: Display all existing clients with their account information
-- **Find Client**: Search for a specific client by account number
-- **Update Client Information**: Modify client details (name, email, phone, PIN, account number)
-- **Delete Client**: Remove a client account from the system
-- **Client Card Display**: View complete client profile including name, email, phone, account number, and balance
-
-### 💳 User Management
-- **Add New User**: Create administrator accounts with customizable permissions
-- **View Users List**: Display all system users and their permission levels
-- **Find User**: Search for a specific user by username
-- **Update User**: Modify user details, password, and permissions
-- **Delete User**: Remove a user account from the system
-
-### 💰 Banking Operations
-- **Deposit**: Add funds to a client account
-- **Withdraw**: Remove funds from an account (with balance validation)
-- **Transfer**: Move funds between two client accounts with automatic balance updates
-- **View Total Balances**: Display the total balance across all client accounts
-- **Balance Validation**: System prevents withdrawals that exceed available balance
-
-### 📊 Transactions & Audit
-- **Transaction Menu**: Centralized interface for all banking operations
-- **Transfer Log**: Maintains a complete history of all transfers including:
-  - Date and time of transaction
-  - Source and destination account numbers
-  - Transfer amount
-  - Balance after transfer for both accounts
-  - Username of the administrator who performed the transfer
-- **Login Register**: Records all login attempts with date, time, username, and permissions assigned
-
-### 📁 Data Management
-- **File-Based Storage**: All data persists in text files with structured formatting
-- **Client Data**: Stored in `Clients.txt` with account information
-- **User Data**: Stored in `Users.txt` with credentials and permissions
-- **Transfer History**: Logged in `Transfer.txt` for audit purposes
-- **Login History**: Recorded in `log.txt` for security tracking
-- **Data Conversion**: Objects are serialized to/from files using custom delimiters
-
-### ✔️ Input Validation
-- **Number Validation**: Methods to validate integers, floats, doubles with range checking
-- **String Input**: Safe string reading without buffer overflow issues
-- **Range Validation**: Ensure numbers fall within acceptable ranges (e.g., menu options)
-- **Date Validation**: Basic date validation for system date operations
-- **Account Existence Checks**: Verify client/user exists before performing operations
-- **Duplicate Prevention**: Check for duplicate account numbers and usernames
+The system also has a permission system, so not every user has access to all features.
 
 ---
 
-## 🧠 OOP Concepts Applied
+## Features
 
-### **Classes & Objects**
-The system uses multiple classes to model real-world entities such as clients, users, and transactions. Each class encapsulates related data and operations.
+### Authentication & Permissions
 
-### **Inheritance**
-- `clsPerson` serves as a base class with common attributes (FirstName, LastName, Email, Phone)
-- `clsBankClient` and `clsUser` inherit from `clsPerson`, extending it with domain-specific properties
-- `clsScreen` is a base class for all screen classes, providing common UI functionality
-- Screen classes inherit from `clsScreen` to share header drawing and permission checking logic
+* User login using username and password.
+* Different users can have different permissions.
+* Each screen checks if the current user has the required permission before opening it.
+* Admin users can access all features.
+* Login information is saved in a log file.
 
-### **Encapsulation**
-- Private member variables store object state (e.g., `_Account_Balance`, `_Pin_Code`)
-- Public getters and setters control access to private data
-- Sensitive operations are kept private (e.g., `_Load_Clients_Data_From_File()`, `_Save_Cleints_Data_To_File()`)
-- File I/O operations are hidden from external users of the class
+The permissions include:
 
-### **Abstraction**
-- Classes abstract complex operations behind simple public interfaces
-- Users don't need to understand file format or data conversion details
-- High-level methods like `save()`, `Delete()`, and `Transfer()` hide implementation complexity
-- Data conversion between objects and file lines is abstracted with methods like `_Convert_Client_Object_To_Line()`
-
-### **Polymorphism**
-- **Function Overloading**: Multiple `Find()` methods with different parameter signatures
-  - `Find(Account_Number)` - finds by account number only
-  - `Find(Account_Number, pin)` - finds by account number and PIN
-- **Access Specifiers**: `protected` access in base classes allows derived screen classes to use inherited methods
-
-### **Static Members & Methods**
-- Static methods provide utility functions accessible without creating instances
-- Examples: `Find()`, `Is_Client_Exist()`, `Get_Clients_List()`, `Get_Total_Balances()`
-- Static data structures store class-level information
-
-### **Getters & Setters with Properties**
-- Uses Microsoft's `__declspec(property)` to create C++-style properties
-- Allows object properties to be accessed like direct member variables
-- Example: `Client.Account_Balance = 5000;` calls the setter automatically
-
-### **Constructors & Destructors**
-- Constructors initialize objects with required data
-- `clsBankClient` constructor chains up to `clsPerson` constructor using inheritance
-- Objects are properly initialized with mode information for add/update operations
-
-### **Enumerations**
-- `en_Mode`: Tracks object state (Empty, Add_New, Update)
-- `en_Save_Results`: Return values for save operations
-- `en_Permissions`: Fine-grained permission levels for role-based access control
-- `en_Transactions_Menue_Options`: Type-safe menu option selection
-
-### **Composition**
-- Screen classes compose other screen classes (e.g., `clsMainScreen` contains references to transaction screens)
-- Objects contain structured data like `st_Trnsfer_Log_Record` and `st_Login_Register_Record`
-
-### **Access Specifiers**
-- **Private**: Data members and internal helper methods
-- **Protected**: Methods inherited by derived classes (`clsScreen`'s protected methods used by all screen classes)
-- **Public**: User-facing interface for the class
+* List Clients
+* Add New Client
+* Delete Client
+* Update Client
+* Find Client
+* Deposit
+* Withdraw
+* Transfer
+* Manage Users
+* View Login Register
+* Access All
 
 ---
 
-## 🏗️ Project Structure
+## Client Management
 
-### Directory Layout
+The system allows me to manage bank clients through different screens.
+
+* Add a new client.
+* Display all clients.
+* Find a client using the account number.
+* Update client information.
+* Delete a client.
+* Display the full client information.
+* Check the client's current balance.
+
+The client contains information such as:
+
+* First Name
+* Last Name
+* Email
+* Phone
+* Account Number
+* PIN Code
+* Account Balance
+
+---
+
+## User Management
+
+The system also has a user management section.
+
+Users are the people who can log in to the system and use its features depending on their permissions.
+
+The system supports:
+
+* Add New User
+* List Users
+* Find User
+* Update User
+* Delete User
+
+Each user has:
+
+* Personal information
+* Username
+* Password
+* Permissions
+
+---
+
+## Banking Operations
+
+The main banking operations are:
+
+### Deposit
+
+Adds money to a client's balance.
+
+### Withdraw
+
+Removes money from a client's balance.
+
+The system checks the balance before allowing the withdrawal.
+
+### Transfer
+
+Transfers money from one client to another.
+
+The transfer updates both balances and also saves the transaction in the transfer log.
+
+### Total Balances
+
+The system can calculate and display the total balance of all clients.
+
+---
+
+## Transactions & Logs
+
+I added logs to keep track of important operations.
+
+### Transfer Log
+
+Every successful transfer is saved with:
+
+* Date and time
+* Source account number
+* Destination account number
+* Transfer amount
+* Source balance after transfer
+* Destination balance after transfer
+* Username of the user who performed the transfer
+
+### Login Register
+
+The system also saves login information including:
+
+* Date and time
+* Username
+* Password used
+* User permissions
+
+This is mainly for practicing how audit logs can be implemented in a system.
+
+---
+
+## File Handling
+
+I used text files to store the data instead of using a database.
+
+The main files are:
+
+```text
+Clients.txt
+Users.txt
+Transfer.txt
+log.txt
+temp.txt
 ```
+
+The data is stored in a simple format using `#//#` as a separator.
+
+For example:
+
+```text
+Mathew#//#Hany#//#MATH@Gmail.com#//#01277302320#//#A101#//#1234#//#9834.000000
+```
+
+When I save an object, I convert its data into a single line.
+
+When I read the file, I split the line again and create the object from the stored data.
+
+So basically:
+
+```text
+Object → String → File
+File → String → Object
+```
+
+---
+
+# OOP Concepts I Used
+
+## Classes & Objects
+
+The whole project is built around classes and objects.
+
+For example, I have classes for:
+
+* Person
+* Bank Client
+* User
+* Screen
+* Date
+* String
+* Input Validation
+
+And many screen classes for the different operations.
+
+---
+
+## Inheritance
+
+I used inheritance to avoid repeating common code.
+
+For example:
+
+```cpp
+class clsBankClient : public clsPerson
+```
+
+and:
+
+```cpp
+class clsUser : public clsPerson
+```
+
+Both `clsBankClient` and `clsUser` inherit the common personal information from `clsPerson`.
+
+I also have:
+
+```cpp
+class clsScreen
+```
+
+as a base class for the different screen classes.
+
+The screen classes inherit common functionality such as drawing the screen header and checking permissions.
+
+---
+
+## Encapsulation
+
+I used private members to protect the internal data of my classes.
+
+For example, the bank client has private data such as:
+
+```cpp
+_Account_Balance
+_Pin_Code
+_Account_Number
+```
+
+and I access them through getters and setters.
+
+I also keep internal functions private, such as functions responsible for loading and saving data.
+
+This keeps the internal implementation hidden from the code that uses the class.
+
+---
+
+## Abstraction
+
+I tried to hide the complicated parts of the system behind simple functions.
+
+For example, instead of having the screen deal directly with file operations, I can simply call functions such as:
+
+```cpp
+Save()
+Delete()
+Transfer()
+Find()
+```
+
+The class handles the actual file operations internally.
+
+I also use conversion functions to convert between objects and file data.
+
+For example:
+
+```cpp
+_Convert_Client_Object_To_Line()
+```
+
+and:
+
+```cpp
+_Convert_Line_to_Client_Object()
+```
+
+---
+
+## Polymorphism
+
+I used polymorphism in a few different ways.
+
+For example, I have virtual functions in base classes that can be overridden by derived classes.
+
+I also used function overloading.
+
+For example, I can have different `Find()` functions that accept different parameters.
+
+```cpp
+Find(Account_Number)
+```
+
+and:
+
+```cpp
+Find(Account_Number, Pin_Code)
+```
+
+Each version performs the search based on the information provided.
+
+---
+
+## Static Members & Functions
+
+I used static functions for operations that don't need a specific object.
+
+Examples include functions for:
+
+```cpp
+Find()
+Is_Client_Exist()
+Get_Clients_List()
+Get_Total_Balances()
+```
+
+These functions can be called without creating an object just to use the function.
+
+---
+
+## Getters, Setters & Properties
+
+I used getters and setters to control access to private data.
+
+I also used Microsoft's:
+
+```cpp
+__declspec(property)
+```
+
+to make some properties easier to use.
+
+For example:
+
+```cpp
+Client.Account_Balance = 5000;
+```
+
+instead of directly accessing the private member.
+
+---
+
+## Constructors
+
+Constructors are used to initialize my objects.
+
+For example, `clsBankClient` initializes the client information and also uses the base class constructor of `clsPerson`.
+
+I also use different modes to control whether an object is being created, updated, or is empty.
+
+---
+
+## Enumerations
+
+I used enums in different parts of the project.
+
+For example:
+
+```cpp
+en_Mode
+```
+
+is used for the object state:
+
+* Empty
+* Add New
+* Update
+
+I also have enums for:
+
+* Save results
+* User permissions
+* Transaction menu options
+
+This makes the code easier to understand instead of using random numbers everywhere.
+
+---
+
+## Composition
+
+Some classes contain or use other objects and structures.
+
+For example, the system uses structures for things like:
+
+```cpp
+st_Transfer_Log_Record
+st_Login_Register_Record
+```
+
+The different screen classes also work together to build the complete application.
+
+---
+
+## Access Specifiers
+
+I used the three main access specifiers:
+
+### private
+
+For internal data and functions that should only be used inside the class.
+
+### protected
+
+For functions that need to be available to derived classes.
+
+For example, `clsScreen` has protected functions that can be used by the different screen classes.
+
+### public
+
+For functions that should be available from outside the class.
+
+---
+
+# Project Structure
+
+The project is organized into different groups of classes.
+
+```text
 Bank with oop/
-├── ConsoleApplication5/
-│   ├── Core Classes/
-│   │   ├── clsPerson.h / .cpp           (Base class for personal information)
-│   │   ├── clsBankClient.h / .cpp       (Bank client accounts and operations)
-│   │   ├── clsUser.h / .cpp             (System users with permissions)
-│   │   ├── clsScreen.h / .cpp           (Base class for all screens)
-│   │   ├── clsDate.h / .cpp             (Date handling and formatting)
-│   │   ├── clsString.h / .cpp           (String manipulation utilities)
-│   │   ├── clsInputValidate.h / .cpp    (Input validation methods)
-│   │   └── clsUtil.h / .cpp             (General utility functions)
-│   │
-│   ├── Screen Classes/
-│   │   ├── clsLoginScreen.h / .cpp      (Login authentication screen)
-│   │   ├── clsMainScreen.h / .cpp       (Main menu for authenticated users)
-│   │   ├── clsManageUsersScreen.h       (User management menu)
-│   │   ├── clsTransactionsScreen.h      (Transaction operations menu)
-│   │   │
-│   │   ├── Client Operations/
-│   │   │   ├── clsClientListScreen.h    (View all clients)
-│   │   │   ├── clsAddNewClientScreen.h  (Add new client account)
-│   │   │   ├── clsDeleteClientScreen.h  (Delete client)
-│   │   │   ├── clsUpdateClientScreen.h  (Edit client details)
-│   │   │   ├── clsFindClientScreen.h    (Search client)
-│   │   │   └── clsTotalBalancesScreen.h (Show total system balance)
-│   │   │
-│   │   ├── User Operations/
-│   │   │   ├── clsUsersListScreen.h     (View all users)
-│   │   │   ├── clsAddNewUserScreen.h    (Add new user)
-│   │   │   ├── clsDeleteUserScreen.h    (Delete user)
-│   │   │   ├── clsUpdateUserScreen.h    (Update user info)
-│   │   │   └── clsFindUserScreen.h      (Search user)
-│   │   │
-│   │   ├── Transaction Operations/
-│   │   │   ├── clsDepositScreen.h       (Deposit funds)
-│   │   │   ├── clsWithdrawScreen.h      (Withdraw funds)
-│   │   │   ├── clsTransferScreen.h      (Transfer between accounts)
-│   │   │   ├── clsTransferLogScreen.h   (View transfer history)
-│   │   │   └── clsLoginRegisterScreen.h (View login records)
-│   │   │
-│   │   └── Utility/
-│   │       └── clsLoginRegisterScreen.h (Audit logs)
-│   │
-│   ├── Entry Point/
-│   │   └── OOP.cpp                      (Main function - starts login screen)
-│   │
-│   ├── Support Files/
-│   │   ├── Global.h / .cpp              (Global current_user variable)
-│   │   └── resource.h                   (Resource identifiers)
-│   │
-│   └── Data Files/
-│       ├── Clients.txt                  (Client records)
-│       ├── Users.txt                    (User accounts)
-│       ├── Transfer.txt                 (Transfer logs)
-│       ├── log.txt                      (Login history)
-│       └── temp.txt                     (Temporary storage)
-│
-└── x64/                                 (Build output directory)
+└── ConsoleApplication5/
+    │
+    ├── Core Classes/
+    │   ├── clsPerson.h / .cpp
+    │   ├── clsBankClient.h / .cpp
+    │   ├── clsUser.h / .cpp
+    │   ├── clsScreen.h / .cpp
+    │   ├── clsDate.h / .cpp
+    │   ├── clsString.h / .cpp
+    │   ├── clsInputValidate.h / .cpp
+    │   └── clsUtil.h / .cpp
+    │
+    ├── Screen Classes/
+    │   ├── clsLoginScreen
+    │   ├── clsMainScreen
+    │   ├── clsManageUsersScreen
+    │   ├── clsTransactionsScreen
+    │   │
+    │   ├── Client Operations/
+    │   ├── User Operations/
+    │   ├── Transaction Operations/
+    │   └── Utility/
+    │
+    ├── Entry Point/
+    │   └── OOP.cpp
+    │
+    ├── Support Files/
+    │   ├── Global.h / .cpp
+    │   └── resource.h
+    │
+    └── Data Files/
+        ├── Clients.txt
+        ├── Users.txt
+        ├── Transfer.txt
+        ├── log.txt
+        └── temp.txt
 ```
 
-### Key Classes & Responsibilities
+The project contains many screen classes, where each screen is responsible for a specific operation.
 
-#### **clsPerson** (Base Class)
-- Stores common person attributes: FirstName, LastName, Email, Phone
-- Provides property getters/setters
-- Base class for both `clsBankClient` and `clsUser`
+For example:
 
-#### **clsBankClient** (Inherits from clsPerson)
-- Manages bank client accounts
-- **Key Responsibilities**:
-  - Store account number, PIN code, account balance
-  - Load/save client data from/to file
-  - Find clients by account number
-  - Perform deposits, withdrawals, transfers
-  - Track transfer history with full audit trail
-  - Maintain list of all clients
+* `clsLoginScreen`
+* `clsMainScreen`
+* `clsDepositScreen`
+* `clsWithdrawScreen`
+* `clsTransferScreen`
+* `clsAddNewClientScreen`
+* `clsUpdateClientScreen`
+* `clsDeleteClientScreen`
+* `clsUsersListScreen`
 
-#### **clsUser** (Inherits from clsPerson)
-- Represents system administrators/users
-- **Key Responsibilities**:
-  - Store username, password, and permissions
-  - Validate user credentials during login
-  - Manage user access to different features
-  - Load/save user data from/to file
-  - Record login attempts
-  - Support adding/updating/deleting users
-
-#### **clsScreen** (Base UI Class)
-- Protected base class for all screen implementations
-- **Key Responsibilities**:
-  - Draw consistent screen headers with title and subtitle
-  - Check user permissions before allowing screen access
-  - Provide common UI formatting
-
-#### **Screen Classes** (60+ files)
-- Each screen handles a specific user interface task
-- Examples: `clsLoginScreen`, `clsMainScreen`, `clsDepositScreen`, `clsTransferScreen`
-- Follow inheritance hierarchy for code reuse
-- Protected access to `clsScreen` methods
-
-#### **clsInputValidate**
-- Provides static methods for safe input reading
-- Validates numbers (int, float, double) with range checking
-- Validates dates
-- Prevents invalid input errors
-
-#### **clsString**
-- String manipulation utilities
-- Methods for case conversion, word counting, character counting
-- Split strings by delimiter
-
-#### **clsDate**
-- Date representation and manipulation
-- Format dates as strings
-- Get system date/time
-- Validate dates
-
-#### **clsUtil** (Cls_Util)
-- Random number generation
-- Random character and key generation
-- Array operations (shuffling, filling)
-- Generic swap operation for multiple types
+This makes the project more organized instead of putting everything inside one big class or one file.
 
 ---
 
-## 💾 Data Storage
+# Main Classes
 
-### Storage Format Overview
-The system uses **text files with custom delimiters** for persistence. Each record is stored as a single line with fields separated by `#//#`.
+## clsPerson
 
-### **Clients.txt** - Client Account Records
-**Format:**
+This is the base class for common personal information.
+
+It contains:
+
+* First Name
+* Last Name
+* Email
+* Phone
+
+It is inherited by:
+
+```cpp
+clsBankClient
+clsUser
 ```
+
+---
+
+## clsBankClient
+
+This class represents a bank client.
+
+It handles things such as:
+
+* Account information
+* Balance
+* Deposit
+* Withdraw
+* Transfer
+* Finding clients
+* Loading clients from files
+* Saving clients to files
+* Updating clients
+* Deleting clients
+* Transfer logging
+
+---
+
+## clsUser
+
+This class represents a system user.
+
+It handles:
+
+* Username
+* Password
+* Permissions
+* Login validation
+* Adding users
+* Updating users
+* Deleting users
+* Finding users
+* Saving users
+* Loading users
+* Login register
+
+---
+
+## clsScreen
+
+This is the base class for the screen classes.
+
+It contains common functionality used by different screens, such as:
+
+* Drawing screen headers
+* Checking permissions
+* Common screen functions
+
+The other screen classes inherit from it.
+
+---
+
+## clsInputValidate
+
+This class contains functions that I use for input validation.
+
+For example:
+
+* Integer validation
+* Float validation
+* Double validation
+* Range validation
+* Date validation
+
+This helps prevent invalid input from breaking the program.
+
+---
+
+## clsString
+
+This class contains different string utility functions.
+
+For example:
+
+* Split strings
+* Count words
+* Count letters
+* Change letter case
+* Other string operations
+
+---
+
+## clsDate
+
+This class is responsible for date-related operations.
+
+It is used for things like:
+
+* Getting the current date
+* Getting date/time
+* Formatting dates
+* Date validation
+
+---
+
+## clsUtil
+
+This class contains some general utility functions.
+
+For example:
+
+* Random numbers
+* Random characters
+* Random keys
+* Shuffling arrays
+* Filling arrays
+* Swapping values
+
+---
+
+# Data Storage
+
+I used text files to save the data.
+
+Each record is stored in one line, and the fields are separated using:
+
+```text
+#//#
+```
+
+## Clients.txt
+
+The client format is:
+
+```text
 FirstName#//#LastName#//#Email#//#Phone#//#AccountNumber#//#PinCode#//#Balance
 ```
 
-**Example:**
-```
+Example:
+
+```text
 Mathew#//#Hany#//#MATH@Gmail.com#//#01277302320#//#A101#//#1234#//#9834.000000
-Adli#//#Haddad#//#Adli@Gmail.com#//#8983883#//#A103#//#1234#//#555.000000
 ```
 
-**Conversion Process:**
-- **Object → File**: `_Convert_Client_Object_To_Line()` concatenates all client properties with the `#//#` delimiter
-- **File → Object**: `_Convert_Line_to_Client_Object()` splits the line by delimiter and constructs a `clsBankClient` object
-- **Operations**: 
-  - **Add**: `_Add_New()` appends a new line to the file
-  - **Update**: `_Update()` loads all records, finds matching account number, replaces it, and writes back
-  - **Delete**: `_Save_Cleints_Data_To_File()` skips records marked with `_Mark_For_Delete = true`
-  - **Read**: `_Load_Clients_Data_From_File()` reads entire file and creates vector of objects
+The program converts the object into this format when saving it.
 
-### **Users.txt** - User Account Records
-**Format:**
-```
+When loading it, the program splits the line and creates the object again.
+
+---
+
+## Users.txt
+
+The user format is:
+
+```text
 FirstName#//#LastName#//#Email#//#Phone#//#UserName#//#Password#//#Permissions
 ```
 
-**Example:**
-```
-Mathew#//#Hany#//#mathioh91@gmail.com#//#01277302320#//#User1#//#0123#//#-1
-Jamil#//#Adli#//#Jamil@gmail.com#//#23123123#//#User2#//#1234#//#-1
+Permissions are stored as an integer.
+
+For example:
+
+```text
+-1
 ```
 
-**Permissions Value:**
-- `-1` = All permissions (Admin/Super User)
-- Positive integers = Bitwise combination of specific permissions
+means the user has all permissions.
 
-**Conversion Process:**
-- Similar to clients: `_Convert_User_Object_To_Line()` and `_Convert_Line_to_User_Object()`
-- Permissions are stored as integers (can represent multiple flags via bitwise operations)
+Other values can represent combinations of permissions using bitwise operations.
 
-### **Transfer.txt** - Transaction Audit Log
-**Format:**
-```
+---
+
+## Transfer.txt
+
+The transfer log format is:
+
+```text
 DateTime#//#SourceAccountNumber#//#DestinationAccountNumber#//#Amount#//#SourceBalanceAfter#//#DestinationBalanceAfter#//#UserName
 ```
 
-**Example:**
-```
-2/10/2026 - 11:30:41#//#A101#//#A222#//#45.000000#//#9834.000000#//#90289.600006#//#User1
-```
+This allows me to keep a history of transfers that happened in the system.
 
-**Fields:**
-- **DateTime**: System date/time formatted as `D/M/YYYY - HH:MM:SS`
-- **SourceAccountNumber**: Account number of transferring client
-- **DestinationAccountNumber**: Account number of receiving client
-- **Amount**: Transfer amount (float)
-- **SourceBalanceAfter**: Source account balance immediately after transfer
-- **DestinationBalanceAfter**: Destination account balance immediately after transfer
-- **UserName**: The system user who performed the transfer
+---
 
-**Recording Process:**
-- Created by `_Prepare_Transfer_Log_Record()` in `clsBankClient`
-- Logged by `_Register_Transfer_Log()` when `Transfer()` method succeeds
-- `Get_Transfers_Log_List()` loads all transfer records for display
+## log.txt
 
-### **log.txt** - Login Register (Audit Trail)
-**Format:**
-```
+The login register contains information about user logins.
+
+The format is:
+
+```text
 DateTime#//#UserName#//#Password#//#Permissions
 ```
 
-**Example:**
+Every time a user logs in, a new record is added.
+
+---
+
+# CRUD Operations
+
+The project also follows the basic CRUD idea:
+
+| Operation | What happens                                      |
+| --------- | ------------------------------------------------- |
+| Create    | Add a new record to the file                      |
+| Read      | Load records from the file                        |
+| Update    | Find a record, change it, then save the data      |
+| Delete    | Mark/remove the selected record and save the file |
+
+For example, when adding a new client:
+
+```text
+Create Object
+      ↓
+Convert Object To Line
+      ↓
+Append Line To Clients.txt
 ```
-30/9/2026 - 18:38:51#//#User1#//#0123#//#-1
-1/10/2026 - 17:27:58#//#User6#//#0123#//#3
-2/10/2026 - 4:54:33#//#User1#//#1234#//#0
+
+When reading:
+
+```text
+Read Line From File
+      ↓
+Split Using #//#
+      ↓
+Create Object
+      ↓
+Return Object
 ```
 
-**Fields:**
-- **DateTime**: Login timestamp
-- **UserName**: Username of logged-in user
-- **Password**: Password used for login (stored in plain text for audit)
-- **Permissions**: Permissions level at time of login
+---
 
-**Recording Process:**
-- `Register_LogIn()` method in `clsUser` writes login record to file
-- `Get_Login_Register_List()` retrieves all login records
-- Used to generate login history reports
+# Why I Used `#//#`
 
-### **Data Operations Summary**
+I chose `#//#` as the delimiter because it is unlikely to be used normally inside names, emails, phone numbers, or account information.
 
-| Operation | How It Works |
-|-----------|--------------|
-| **Create** | `_Add_New()` → `_Add_Data_Line_To_File()` appends serialized object as new line |
-| **Read** | `_Load_Clients_Data_From_File()` reads entire file, converts each line to object, returns vector |
-| **Update** | `_Update()` loads all records, finds by key, updates object, saves entire file back |
-| **Delete** | Sets `_Mark_For_Delete = true`, then `_Save_Cleints_Data_To_File()` skips marked records |
-| **Search** | Loads file, iterates through records comparing key fields (account number, username) |
-| **Serialize** | `_Convert_*_Object_To_Line()` combines fields with `#//#` delimiter |
-| **Deserialize** | `_Convert_Line_to_*_Object()` splits by `#//#` and creates object via constructor |
+It also makes the stored data easy to read when I open the file manually.
 
-### **Delimiter Choice**
-The delimiter `#//#` is chosen because:
-- Unlikely to appear in normal user input (names, emails, etc.)
-- Three characters make it distinctive and easy to find
-- Easily searchable for debugging
-- Not a special regex character requiring escaping
+---
 
-### **File Paths**
-All data files are stored in the project's working directory:
-- No absolute paths used
-- Files created automatically if they don't exist
-- `ios::out | ios::app` mode for appending
-- `ios::in` mode for reading
+# Important Note
 
+This project is mainly a **learning project** to practice C++ OOP and building a larger application.
+
+The data is stored in text files, so this is not intended to be a real banking system.
+
+For example, passwords are currently stored as plain text because the main goal of the project was practicing OOP, file handling, permissions, and system design.
+
+A real banking application would need much stronger security, proper password hashing, a database, encryption, secure authentication, transaction consistency, and many other things.
+
+---
+
+# What I Practiced in This Project
+
+While building this project, I practiced a lot of things together instead of learning each concept separately.
+
+Some of the main things I worked with are:
+
+* C++
+* OOP
+* Inheritance
+* Encapsulation
+* Abstraction
+* Polymorphism
+* Constructors
+* Static members
+* Enums
+* File handling
+* Serialization and deserialization
+* CRUD operations
+* Input validation
+* Permissions
+* Authentication
+* Logging
+* Multiple classes and files
+* `.h` and `.cpp` separation
+* Basic system design
+
+The main purpose of the project was to take the OOP concepts I learned and actually use them in a relatively large project instead of only solving small examples.
