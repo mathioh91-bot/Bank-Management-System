@@ -43,7 +43,6 @@ public:
 	{
 		string DateTime;
 		string UserName;
-		string Password;
 		int Permissions;
 	};
 
