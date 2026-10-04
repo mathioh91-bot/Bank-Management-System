@@ -33,10 +33,10 @@ private:
 
 	static clsBankClient _Get_Empty_Client_Object();
 
-	string _Prepare_Transfer_Log_Record(float Amount, clsBankClient DestinationClient, string UserName, string Seperator = "#//#");
+	string _Prepare_Transfer_Log_Record(double Amount, clsBankClient DestinationClient, string UserName, string Seperator = "#//#");
 
 
-	void _Register_Transfer_Log(float Amount, clsBankClient DestinationClient, string UserName);
+	void _Register_Transfer_Log(double Amount, clsBankClient DestinationClient, string UserName);
 	struct st_Trnsfer_Log_Record;
 
 	static st_Trnsfer_Log_Record _Convert_Transfer_Log_Line_To_Record(string Line, string Seperator = "#//#");
@@ -97,7 +97,7 @@ public:
 
 	static clsBankClient Get_Add_New_Client_Object(string account_number);
 
-	static float Get_Total_Balances();
+	static double Get_Total_Balances();
 
 	void Deposit(double Amount);
 

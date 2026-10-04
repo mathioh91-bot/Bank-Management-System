@@ -322,7 +322,7 @@ DateTime#//#SourceAccountNumber#//#DestinationAccountNumber#//#Amount#//#SourceB
 - **DateTime**: System date/time formatted as `D/M/YYYY - HH:MM:SS`
 - **SourceAccountNumber**: Account number of transferring client
 - **DestinationAccountNumber**: Account number of receiving client
-- **Amount**: Transfer amount (float)
+- **Amount**: Transfer amount (double)
 - **SourceBalanceAfter**: Source account balance immediately after transfer
 - **DestinationBalanceAfter**: Destination account balance immediately after transfer
 - **UserName**: The system user who performed the transfer
@@ -335,26 +335,26 @@ DateTime#//#SourceAccountNumber#//#DestinationAccountNumber#//#Amount#//#SourceB
 ### **log.txt** - Login Register (Audit Trail)
 **Format:**
 ```
-DateTime#//#UserName#//#Password#//#Permissions
+DateTime#//#UserName#//#Permissions
 ```
 
 **Example:**
 ```
-30/9/2026 - 18:38:51#//#User1#//#0123#//#-1
-1/10/2026 - 17:27:58#//#User6#//#0123#//#3
-2/10/2026 - 4:54:33#//#User1#//#1234#//#0
+30/9/2026 - 18:38:51#//#User1#//#-1
+1/10/2026 - 17:27:58#//#User6#//#3
+2/10/2026 - 4:54:33#//#User1#//#0
 ```
 
 **Fields:**
 - **DateTime**: Login timestamp
 - **UserName**: Username of logged-in user
-- **Password**: Password used for login (stored in plain text for audit)
 - **Permissions**: Permissions level at time of login
 
 **Recording Process:**
 - `Register_LogIn()` method in `clsUser` writes login record to file
 - `Get_Login_Register_List()` retrieves all login records
 - Used to generate login history reports
+- Records all successful login attempts
 
 ### **Data Operations Summary**
 

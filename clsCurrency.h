@@ -150,11 +150,11 @@ public:
 			else {
 					if (clsString::Upper_All_String(c.Currency_Code()) == Currency_Code) {
 						return c;
-					
+
 					}
 
 				}
-			
+
 		}
 		return _Get_Empty_Currency_Object();
 	}

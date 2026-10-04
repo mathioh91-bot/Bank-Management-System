@@ -230,7 +230,7 @@ void clsBankClient::_Add_New() {
 	 return clsBankClient(Add_New, "", "", "", "", account_number, "", 0);
  }
 
-  float  clsBankClient::Get_Total_Balances()
+  double  clsBankClient::Get_Total_Balances()
  {
 	 vector <clsBankClient> vClients = clsBankClient::Get_Clients_List();
 
@@ -251,7 +251,7 @@ void clsBankClient::_Add_New() {
  }
 
 
- string  clsBankClient::_Prepare_Transfer_Log_Record(float Amount, clsBankClient DestinationClient, string UserName, string Seperator)
+ string  clsBankClient::_Prepare_Transfer_Log_Record(double Amount, clsBankClient DestinationClient, string UserName, string Seperator)
  {
 	 string TransferLogRecord = "";
 	 TransferLogRecord += clsDate::GetSystemDateTimeString() + Seperator;
@@ -277,7 +277,7 @@ void clsBankClient::_Add_New() {
 	 return true;
  }
 
- void clsBankClient::_Register_Transfer_Log(float Amount, clsBankClient DestinationClient, string UserName)
+ void clsBankClient::_Register_Transfer_Log(double Amount, clsBankClient DestinationClient, string UserName)
  {
 
 	 string stDataLine = _Prepare_Transfer_Log_Record(Amount, DestinationClient, UserName);
