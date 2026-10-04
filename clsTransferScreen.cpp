@@ -30,12 +30,12 @@ double clsTransferScreen::ReadAmount(clsBankClient SourceClient)
 
     cout << "\nEnter Transfer Amount? ";
 
-    Amount = clsInputValidate::Read_Float_Number();
+    Amount = clsInputValidate::Read_Number<float>();
 
     while (Amount > SourceClient.Account_Balance)
     {
         cout << "\nAmount Exceeds the available Balance, Enter another Amount ? ";
-        Amount = clsInputValidate::Read_Float_Number();
+        Amount = clsInputValidate::Read_Number<float>();
     }
     return Amount;
 }

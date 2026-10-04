@@ -1,38 +1,57 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <limits>
 #include "clsString.h"
 #include "clsDate.h"
+
+using namespace std;
 
 class clsInputValidate
 {
 public:
 
-	static bool Is_Number_Between(short Number, short From, short To);
+    template <typename T>
+    static bool Is_Number_Between(T Number, T From, T To)
+    {
+        return Number >= From && Number <= To;
+    }
 
-	static bool Is_Number_Between(int Number, int From, int To);
+    static bool Is_Date_Between(clsDate Date, clsDate From, clsDate To);
 
-	static bool Is_Number_Between(float Number, float From, float To);
+    template <typename T>
+    static T Read_Number(string ErrorMessage = "Invalid Number, Enter again\n")
+    {
+        T Number;
 
-	static bool Is_Number_Between(double Number, double From, double To);
+        while (!(cin >> Number))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << ErrorMessage;
+        }
 
-	static bool Is_Date_Between(clsDate Date, clsDate From, clsDate To);
+        return Number;
+    }
 
-	static int Read_Int_Number(string ErrorMessage = "Invalid Number, Enter again\n");
+    template <typename T>
+    static T Read_Number_Between(
+        T From,
+        T To,
+        string ErrorMessage = "Number is not within range, Enter again:\n")
+    {
+        T Number = Read_Number<T>();
 
-	static short Read_Short_Number(string ErrorMessage = "Invalid Number, Enter again\n");
+        while (!Is_Number_Between(Number, From, To))
+        {
+            cout << ErrorMessage;
+            Number = Read_Number<T>();
+        }
 
-	static int Read_Int_Number_Between(int From, int To, string ErrorMessage = "Number is not within range, Enter again:\n");
+        return Number;
+    }
 
-	static short Read_Short_Number_Between(short From, short To, string ErrorMessage = "Number is not within range, Enter again:\n");
+    static bool Is_Valide_Date(clsDate Date);
 
-	static double Read_Dbl_Number(string ErrorMessage = "Invalid Number, Enter again\n");
-
-	static float Read_Float_Number(string ErrorMessage = "Invalid Number, Enter again\n");
-
-	static double ReadDblNumberBetween(double From, double To, string ErrorMessage = "Number is not within range, Enter again:\n");
-
-	static bool Is_Valide_Date(clsDate Date);
-
-	static string Read_String();
+    static string Read_String();
 };

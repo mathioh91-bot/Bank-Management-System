@@ -42,7 +42,7 @@ void clsDepositScreen::_PrintClient(clsBankClient Client)
 
 		double Amount = 0;
 		cout << "\nPlease enter deposit amount? ";
-		Amount = clsInputValidate::Read_Dbl_Number();
+		Amount = clsInputValidate::Read_Number<double>();
 
 		cout << "\nAre you sure you want to perform this transaction? ";
 		char Answer = 'n';

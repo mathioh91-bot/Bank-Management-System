@@ -41,7 +41,7 @@ void clsWithdrawScreen::ShowWithdrawScreen()
 
 		double Amount = 0;
 		cout << "\nPlease enter Withdraw amount? ";
-		Amount = clsInputValidate::Read_Dbl_Number();
+		Amount = clsInputValidate::Read_Number<double>();
 
 		cout << "\nAre you sure you want to perform this transaction? ";
 		char Answer = 'n';

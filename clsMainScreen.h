@@ -12,6 +12,7 @@
 #include "Global.h";
 #include "clsManageUsersScreen.h"
 #include "clsLoginRegisterScreen.h"
+#include "clsCurrencyExchangeMainScreen.h"
 using namespace std;
 class clsMainScreen : protected clsScreen
 {
@@ -19,7 +20,7 @@ private:
 	enum en_Main_Menue_Options {
 		eListClients = 1, eAddNewClient = 2, eDeleteClient = 3,
 		eUpdateClient = 4, eFindClient = 5, eShowTransactionsMenue = 6,
-		eManageUsers = 7, eLoginRedister, eExit = 9
+		eManageUsers = 7, eLoginRedister,  eCurrncyExchange = 9, eExit = 10
 	};
 
 	static short _Read_Main_Menue_Option();
@@ -41,6 +42,10 @@ private:
 	static void _Show_Manage_Users_Menue();
 
 	static void _Show_Login_Register();
+
+
+	static void _Show_Currency_Exchange_Main_Screen();
+	
 
 	static void _Logout();
 

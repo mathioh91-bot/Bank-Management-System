@@ -7,8 +7,9 @@ clsUser::st_Login_Register_Record clsUser::_Convert_Login_Register_Line_To_Recor
 	vector <string> LoginRegisterDataLine = clsString::Split(Line, Seperator);
 	LoginRegisterRecord.DateTime =LoginRegisterDataLine[0];
 	LoginRegisterRecord.UserName = LoginRegisterDataLine[1];
-	LoginRegisterRecord.Permissions = stoi(LoginRegisterDataLine[2]);
-
+	LoginRegisterRecord.Password = LoginRegisterDataLine[2];
+	LoginRegisterRecord.Permissions = stoi(LoginRegisterDataLine[3]);
+	
 	return LoginRegisterRecord;
 }
 
@@ -182,9 +183,10 @@ clsUser::en_Save_Results clsUser::Save()
 	{
 	case en_Mode::Empty_Mode:
 	{
-		
+		if (Is_Empty())
+		{
 			return en_Save_Results::svFaildEmptyObject;
-		
+		}
 	}
 
 	case en_Mode::Update_Mode:
@@ -262,6 +264,7 @@ string clsUser::_Prepare_Log_In_Record(string Seperator)
 	string LoginRecord = "";
 	LoginRecord += clsDate::GetSystemDateTimeString() + Seperator;
 	LoginRecord += UserName + Seperator;
+	LoginRecord += Password + Seperator;
 	LoginRecord += to_string(Permissions);
 	return LoginRecord;
 }
