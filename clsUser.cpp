@@ -37,7 +37,7 @@ string clsUser::_Convert_User_Object_To_Line(clsUser user, string Seperator)
 vector<clsUser> clsUser::_Load_User_Data_From_File() {
 	fstream My_File;
 	vector<clsUser> v;
-	My_File.open("temp.txt", ios::in);
+	My_File.open("Users.txt", ios::in);
 	if (My_File.is_open()) {
 		string line;
 		while (getline(My_File, line)) {
@@ -52,7 +52,7 @@ vector<clsUser> clsUser::_Load_User_Data_From_File() {
 void clsUser::_Save_User_Data_To_File(vector <clsUser> vClients)
 {
 	fstream My_File;
-	My_File.open("temp.txt", ios::out);
+	My_File.open("Users.txt", ios::out);
 	if (My_File.is_open())
 	{
 		string Data_Line;
@@ -87,7 +87,7 @@ void clsUser::_Update()
 
 void clsUser::_Add_Data_Line_To_File(string  stDataLine) {
 	fstream My_file;
-	My_file.open("temp.txt", ios::out | ios::app);
+	My_file.open("Users.txt", ios::out | ios::app);
 	if (My_file.is_open()) {
 		My_file << stDataLine << "\n";
 		My_file.close();
@@ -147,7 +147,7 @@ int clsUser::Get_Permissions()
 clsUser clsUser::Find_User(string user_name, string password, bool pin) {
 	fstream My_File;
 	//vector<clsUser> v;
-	My_File.open("temp.txt", ios::in); //read Mode
+	My_File.open("Users.txt", ios::in); //read Mode
 	if (My_File.is_open()) {
 		string line;
 
