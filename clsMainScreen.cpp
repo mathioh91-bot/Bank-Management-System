@@ -61,7 +61,7 @@ void clsMainScreen::_Show_Login_Register() {
 }
 void clsMainScreen::_Logout()
 {
-	Current_User._Get_Empty_User_Object();
+	Current_User = clsUser::._Get_Empty_User_Object();
 	cout << "\nprogram ends\n";
 }
 
