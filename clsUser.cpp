@@ -7,7 +7,7 @@ clsUser::st_Login_Register_Record clsUser::_Convert_Login_Register_Line_To_Recor
 	vector <string> LoginRegisterDataLine = clsString::Split(Line, Seperator);
 	LoginRegisterRecord.DateTime = LoginRegisterDataLine[0];
 	LoginRegisterRecord.UserName = LoginRegisterDataLine[1];
-	LoginRegisterRecord.Permissions = stoi(LoginRegisterDataLine[3]);
+	LoginRegisterRecord.Permissions = stoi(LoginRegisterDataLine[2]);
 
 	return LoginRegisterRecord;
 }
